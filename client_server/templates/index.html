@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+{% block title %}
+    TODO
+{% endblock %}
+
+{% block content %}
+    <div class="title container-fluid">
+        <div class="row">
+            <h1 class="col-md-10">TODO List</h1>
+            <span class="col-md-2 user">{{ uid }} - {{ email }}</span>
+        </div>
+    </div>
+
+    <div class="screen">
+    <form method="POST" action="{{ url_for('create_todo', access_token=access_token) }}">
+        {{form.csrf_token }}
+        {{form.id.label}}
+        {{form.id(readonly=true)}}
+        <br>
+        {{form.todo.label}}
+        {{form.todo(class_="todo")}}
+        <br>
+        {{form.due.label}}
+        {{form.due}}
+        <br>
+        {{form.submit(class="btn btn-primary")}}
+        {{ msg }}
+    </form>
+
+    <table class="table">
+    <thead class="thead-light">
+        <tr>
+            <th>#</th>
+            <th>todo</th>
+            <th>due date</th>
+            <th>update</th>
+            <th>delete</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for todo in todos: %}
+            <tr>
+                <td>{{todo.id}}</td>
+                <td>{{todo.todo}}</td>
+                <td>{{todo.due}}</td>
+                <td><a href="{{ url_for('update_todo', id=todo.id, todo=todo.todo, due=todo.due, access_token=access_token) }}">u</a>  </td>
+                <td><a href="{{ url_for('delete_todo', id=todo.id, access_token=access_token) }}">x</a>  </td>
+            </tr>
+        {% endfor %}
+    </tbody>
+
+    </table>
+
+    </div>
+
+{% endblock %}

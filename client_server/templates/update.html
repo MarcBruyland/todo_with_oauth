@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block title %}
+    TODO
+{% endblock %}
+
+{% block content %}
+    <div class="title container-fluid">
+        <div class="row">
+            <h1 class="col-md-10">Update TODO</h1>
+            <span class="col-md-2 user">{{ uid }} - {{ email }}</span>
+        </div>
+    </div>
+    <div class="screen">
+        <form method="POST" action="{{ url_for('update_todo', access_token=access_token) }}">
+            {{form.csrf_token }}
+            {{form.id.label}}
+            {{form.id(readonly=true)}}
+            <br>
+            {{form.todo.label}}
+            {{form.todo(class_="todo")}}
+            <br>
+            {{form.due.label}}
+            {{form.due}}
+            <br>
+            {{form.submit(class="btn btn-primary")}}
+            {{ msg }}
+        </form>
+    </div>
+
+{% endblock %}
